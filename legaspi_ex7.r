@@ -85,7 +85,8 @@ Neville <- function(independent, dependent, given_x){
   n = length(independent)
   degree = n - 1
   
-  o = order(independent)
+  x_i = abs(given_x - independent)
+  o = order(x_i)
   x = independent[o]
   y = dependent[o]
   
@@ -96,8 +97,8 @@ Neville <- function(independent, dependent, given_x){
 
 #x = c(4.25, 1, 3.5, 5)
 #y = c(1.4469, 0, 1.2528, 1.6094)
-x = c(1, 3, 4, 5)
-y = c(0, 1.0986, 1.3863, 1.6094)
+x = c(4, 5, 1, 3)
+y = c(1.3863, 1.6094, 0, 1.0986)
 
 ret_1 = Lagrange(x, y)
 print(ret_1$f)
