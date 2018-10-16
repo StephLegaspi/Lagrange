@@ -39,9 +39,9 @@ Lagrange <- function(independent, dependent){
   return(result)
 }
 
-ColName <- function(){
+ColName <- function(len){
   cols = c("I", "Xi", "|X-Xi|")
-  for (i in 1:4) {
+  for (i in 1:len) {
     col_name = paste("Pi", i, sep = "")
     cols <- c(cols, col_name)
   }
@@ -58,7 +58,7 @@ RowName <- function(len){
 
 InitMatrix <- function(x, y, given_x){
   len = length(x)
-  m = matrix(data=NA, nrow=len, ncol=(3+len), dimnames = list(RowName(len), ColName()))
+  m = matrix(data=NA, nrow=len, ncol=(3+len), dimnames = list(RowName(len), ColName(len)))
   
   for (c in 1:len) { #fill-up the first 4 columns of matrix
     m[c, 1] = c
@@ -92,6 +92,13 @@ Neville <- function(independent, dependent, given_x){
   
   m = InitMatrix(x, y, given_x)
   matrix_res = FillMatrix(x, y, given_x, m, n)
+  
+  for (i in 1:n) {
+    if(matrix_res[i, 3] < 0){
+      matrix_res[i, 3] = matrix_res[i, 3] * -1
+    }
+  }
+  
   res_final = list(mat = matrix_res, result = matrix_res[1, (n+3)]) 
 }
 
@@ -99,7 +106,7 @@ Neville <- function(independent, dependent, given_x){
 #y = c(1.4469, 0, 1.2528, 1.6094)
 x = c(4, 5, 1, 3)
 y = c(1.3863, 1.6094, 0, 1.0986)
-
+  
 ret_1 = Lagrange(x, y)
 print(ret_1$f)
 print(ret_1$f(2))
